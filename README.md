@@ -1,6 +1,6 @@
 # RoboGen Backend Service (based on Docker)
 
-##steps to run the sample rest service on docker -
+## Steps to run the sample rest service on docker:
 
 1. Clone the Repository 
 
@@ -17,11 +17,13 @@ Note: If the image is built inside a private network, you can mention gateway to
 
 	  
 	  
-##A Sample Client
+## A Sample Client:
 
+```python
 import requests
 r = requests.post('http://0.0.0.0:5000/v1/api',verify=False, json={"name": "naren"})
 headers = {'Content-type': 'application/json'}
 print(r.status_code)
 if r.ok:
     print r.content
+```
