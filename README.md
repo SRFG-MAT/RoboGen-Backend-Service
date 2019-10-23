@@ -2,9 +2,9 @@
 
 steps to run the sample rest service on docker -
 
-1. Clone the Repository - git clone https://github.com/nanic/python-rest-api-docker.git
+1. Clone the Repository 
 
-2. Move to the directory - cd python-rest-api-docker
+2. Move to the cloned directory
 
 3. Build the docker image - docker build -t python-rest .
 
