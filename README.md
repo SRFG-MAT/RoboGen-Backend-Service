@@ -1,6 +1,6 @@
 # RoboGen Backend Service (based on Docker)
 
-steps to run the sample rest service on docker -
+##steps to run the sample rest service on docker -
 
 1. Clone the Repository 
 
@@ -10,14 +10,14 @@ steps to run the sample rest service on docker -
 
 4. Create and run a container: "docker run -d -p 5000:5000 python-rest"
 
-5. Navigate to http://0.0.0.0:5000/ to get hello world'd
+5. Navigate to http://0.0.0.0:5000/ or http://localhost:5000/ to get "hello world"
 
 Note: If the image is built inside a private network, you can mention gateway to proxy through
       Ex: docker build --build-arg proxy=<hostname:port> -t python-rest .
 
 	  
 	  
-A Sample Client --
+##A Sample Client
 
 import requests
 r = requests.post('http://0.0.0.0:5000/v1/api',verify=False, json={"name": "naren"})
