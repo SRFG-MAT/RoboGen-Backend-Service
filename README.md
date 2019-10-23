@@ -21,9 +21,11 @@ Note: If the image is built inside a private network, you can mention gateway to
 
 ```python
 import requests
+
 r = requests.post('http://0.0.0.0:5000/v1/api',verify=False, json={"name": "naren"})
 headers = {'Content-type': 'application/json'}
 print(r.status_code)
+
 if r.ok:
     print r.content
 ```
