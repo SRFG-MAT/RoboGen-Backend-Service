@@ -1,6 +1,7 @@
 
 #--------------------------------------------------------------------
-# Base Python version and Co.
+# Base Python version alpine and Co.
+# For alpine use "apk update/add" instead of "apt-get update/install"
 #--------------------------------------------------------------------
 FROM python:2.7.16-alpine
 ARG proxy
@@ -16,19 +17,15 @@ WORKDIR /apps
 RUN python -V
 RUN pip install pipenv && pipenv install
 
-
-#--------------------------------------------------------------------
-# install apt-get
-#--------------------------------------------------------------------
-#RUN wget http://security.ubuntu.com/ubuntu/pool/main/a/apt/apt_1.4_amd64.deb
-#RUN sudo dpkg -i apt_1.4_amd64.deb
-
 #--------------------------------------------------------------------
 # install dlib
 #--------------------------------------------------------------------
-#RUN apt-get update && apt-get install -y libopencv-dev
-#RUN apt-get update && apt-get -y install cmake protobuf-compiler
+RUN apk update 
+RUN apk add cmake
+#RUN pip install numpy
 #RUN pip install dlib
 
-
+#--------------------------------------------------------------------
+# call bootstrap.sh
+#--------------------------------------------------------------------
 CMD ["sh","/apps/bootstrap.sh"]
