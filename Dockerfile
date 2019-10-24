@@ -21,9 +21,41 @@ RUN pip install pipenv && pipenv install
 # install dlib
 #--------------------------------------------------------------------
 RUN apk update 
+
 RUN apk add cmake
-#RUN pip install numpy
+#RUN python -m pip install --upgrade pip
+
+RUN pip install scikit-build
+#RUN pip install cmake
 #RUN pip install dlib
+
+
+#RUN apk add \
+#    build-essential \
+#    cmake \
+#    gfortran \
+#    git \
+#    wget \
+#    curl \
+#    graphicsmagick \
+#    libgraphicsmagick1-dev \
+#    libatlas-dev \
+#    libavcodec-dev \
+#    libavformat-dev \
+#    libboost-all-dev \
+#    libgtk2.0-dev \
+#    libjpeg-dev \
+#    liblapack-dev \
+#    libswscale-dev \
+#    pkg-config \
+#    python-dev \
+#    python-numpy \
+#    python-protobuf\
+#    software-properties-common \
+#    zip \
+#RUN apk del -rf /tmp/* /var/tmp/*
+
+
 
 #--------------------------------------------------------------------
 # call bootstrap.sh
