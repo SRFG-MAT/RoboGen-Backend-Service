@@ -6,6 +6,7 @@
 #----------------------------------------------------
 from flask import Flask,request,jsonify
 import logging
+import json
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -37,8 +38,8 @@ def postSomeThing():
 def analyzeFrameForEmotion():
 
 	emotion = "unknown"
-	content = request.json
-	imageString = content['image']
+	readable_json = json.loads(request.json)
+	imageString = readable_json['image']
 	image = json2im(imageString)
 	logger.info('analyzing frame for emotion')
 	
