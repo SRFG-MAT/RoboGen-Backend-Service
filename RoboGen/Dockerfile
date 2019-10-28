@@ -31,6 +31,7 @@ RUN apt-get install -y --fix-missing \
     python3-numpy \
     software-properties-common \
     zip \
+    python-opencv \
     && apt-get clean && rm -rf /tmp/* /var/tmp/*
 
 RUN cd ~ && \
@@ -58,6 +59,7 @@ RUN cd /root/apps/
 #--------------------------------------------------------------------
 RUN python -V
 RUN pip install pipenv && pipenv --python 2.7 install
+RUN pip install opencv-python && pip3 install opencv-python
 CMD ["sh","bootstrap.sh"]
 
 
