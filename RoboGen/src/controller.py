@@ -38,8 +38,9 @@ def analyzeFrameForEmotion():
 
 	emotion = "unknown"
 	content = request.json
-	frame = content['frame']
+	imageString = content['image']
+	image = json2im(imageString)
 	logger.info('analyzing frame for emotion')
 	
 	# analyze this frame and return the result
-	return analyzeFrameForEmotion(frame)
+	return analyzeFrameForEmotion(image)

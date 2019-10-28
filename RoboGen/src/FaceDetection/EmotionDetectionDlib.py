@@ -6,6 +6,7 @@ import math
 import sys
 from sklearn.externals import joblib
 from scipy.stats import mode
+import base64
 import pickle
 import time
 
@@ -22,6 +23,16 @@ clf = SVC(kernel='linear', probability=True, tol=1e-3)#, verbose = True) #Set th
 #clf = joblib.load("EDModel.sav")
 clf = pickle.load( open("EmotionPredictionModel_All.p", "rb"))
 list_of_current_emotions = []
+
+# -------------------------------------------------------------------------------------------
+# get image from json string
+# -------------------------------------------------------------------------------------------
+def json2im(jstr):
+    """Convert a JSON string back to a Numpy array"""
+    load = json.loads(jstr)
+    imdata = base64.b64decode(load['image'])
+    im = pickle.loads(imdata)
+    return im
 
 # -------------------------------------------------------------------------------------------
 # function decodeEmotion
