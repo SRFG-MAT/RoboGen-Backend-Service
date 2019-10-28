@@ -17,25 +17,11 @@ clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat") #Or set this to whatever you named the downloaded file
 clf = SVC(kernel='linear', probability=True, tol=1e-3)#, verbose = True) #Set the classifier as a support vector machines with polynomial kernel
-data = {} #Make dictionary for all values
-
+#data = {} #Make dictionary for all values
 #clf = joblib.load("EmotionPredictionModel_All.sav")
 #clf = joblib.load("EDModel.sav")
 clf = pickle.load( open("EmotionPredictionModel_All.p", "rb"))
 list_of_current_emotions = []
-
-# -------------------------------------------------------------------------------------------
-# Set up some required webcam object and change size of images
-# -------------------------------------------------------------------------------------------
-vs = cv2.VideoCapture(0)
-vs.set(cv2.cv.CV_CAP_PROP_FRAME_WIDTH, 400)
-vs.set(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT, 400)
-
-# -------------------------------------------------------------------------------------------
-# helpers needed to reduce frames per second
-# -------------------------------------------------------------------------------------------
-frame_rate = 5
-prev = 0
 
 # -------------------------------------------------------------------------------------------
 # function decodeEmotion
@@ -57,9 +43,9 @@ def decodeEmotion(pred):
         return "oh well, something went wrong..."
 
 # -------------------------------------------------------------------------------------------
-# function get_landmarks_for_classification
+# function getLandmarksForClassification
 # -------------------------------------------------------------------------------------------
-def get_landmarks_for_classification(image):
+def getLandmarksForClassification(image):
     detections = detector(image, 1)
 
     for k, d in enumerate(detections): #For all detected face instances individually
@@ -88,47 +74,38 @@ def get_landmarks_for_classification(image):
 # -------------------------------------------------------------------------------------------
 # keep looping endlessly to find 
 # -------------------------------------------------------------------------------------------
-while True:  
+def analyzeFrameForEmotion(frame): 
 
-    # reduce frames per second
-    if (time.time() - prev) > 1./frame_rate:
-        prev = time.time()
-        
-        # grab the current frame
-        # if we did not get a frame, we have reached the videos end
-        ret, frame = vs.read()
-        if frame is None:
-            continue
-
-        faces = faceCascade.detectMultiScale(frame)
-        
-        for (x, y, w, h) in faces:
-            gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # Convert image to grayscale
-            face = gray[y:y + h, x:x + w]  # Cut the frame to size
-            face_two = cv2.resize(face, (350, 350))
-            clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
-            clahe_image = clahe.apply(face_two)
-            features = np.array(get_landmarks_for_classification(clahe_image))
-            features = np.reshape(features, (1, -1))
-            
-            if len(features[0]) < 100:
-                continue
-
-            prediction = clf.predict(features)
-            list_of_current_emotions.append(prediction)
-            
-            if len(list_of_current_emotions) > 5:
-                list_of_current_emotions.pop(0)
-
-            int_emotion = mode(list_of_current_emotions)[0]
-            emotion = decodeEmotion(int_emotion)
-
-            cv2.putText(frame, emotion, (x, y), cv2.FONT_HERSHEY_COMPLEX, 1.0, (255, 255, 255))
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 0), 2)
-
-        cv2.imshow("Video", frame)
-        key = cv2.waitKey(1) & 0xFF
-
-    # if the 'q' key is pressed, stop the loop
-    if key == ord("q"):
-        break
+	retEmotion = "unknown"
+		
+	if frame is None:
+		return retEmotion
+	
+	faces = faceCascade.detectMultiScale(frame)
+	
+	for (x, y, w, h) in faces:
+		gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # Convert image to grayscale
+		face = gray[y:y + h, x:x + w]  # Cut the frame to size
+		face_two = cv2.resize(face, (350, 350))
+		clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+		clahe_image = clahe.apply(face_two)
+		features = np.array(getLandmarksForClassification(clahe_image))
+		features = np.reshape(features, (1, -1))
+		
+		if len(features[0]) < 100:
+			continue
+	
+		prediction = clf.predict(features)
+		list_of_current_emotions.append(prediction)
+		
+		if len(list_of_current_emotions) > 5:
+			list_of_current_emotions.pop(0)
+	
+		int_emotion = mode(list_of_current_emotions)[0]
+		emotion = decodeEmotion(int_emotion)
+		
+		#test: TODO all detected emotions of all faces should be returned, not just last one
+		retEmotion = emotion
+	
+	return retEmotion
+	
