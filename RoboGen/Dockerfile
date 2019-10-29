@@ -7,9 +7,10 @@
 FROM python:3.6-slim-stretch
 
 #--------------------------------------------------------------------
-# install dlib
+# install dlib outside of pipenv shell
+# (potentially not needed anymore)
 #--------------------------------------------------------------------
-RUN apt-get -y update
+RUN apt-get -y update && apt-get upgrade
 RUN apt-get install -y --fix-missing \
     build-essential \
     cmake \
@@ -31,7 +32,6 @@ RUN apt-get install -y --fix-missing \
     python3-numpy \
     software-properties-common \
     zip \
-    python-opencv \
     && apt-get clean && rm -rf /tmp/* /var/tmp/*
 
 RUN cd ~ && \
@@ -55,11 +55,18 @@ WORKDIR /root/apps/
 RUN cd /root/apps/
 
 #--------------------------------------------------------------------
-# install pipenv and call bootstrap.sh
+# install pipenv and required packages within virtual env
 #--------------------------------------------------------------------
 RUN python -V
-RUN pip install pipenv && pipenv --python 2.7 install
-RUN pip install opencv-python && pip3 install opencv-python
+RUN pip3 install pipenv && pipenv --python 3.6 install
+RUN pipenv install numpy
+RUN pipenv install opencv-python
+RUN pipenv install dlib
+RUN pipenv install sklearn
+
+#--------------------------------------------------------------------
+# call bootstrap.sh
+#--------------------------------------------------------------------
 CMD ["sh","bootstrap.sh"]
 
 
