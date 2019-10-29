@@ -45,4 +45,4 @@ def analyzeFrameForEmotion():
 	logger.info('analyzing frame for emotion')
 	
 	# analyze this frame and return the result
-	return analyzeFrameForEmotion(image)
+	return analyzeFrame(image)

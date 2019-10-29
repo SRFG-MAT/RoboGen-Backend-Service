@@ -85,7 +85,7 @@ def getLandmarksForClassification(image):
 # -------------------------------------------------------------------------------------------
 # keep looping endlessly to find 
 # -------------------------------------------------------------------------------------------
-def analyzeFrameForEmotion(frame): 
+def analyzeFrame(frame): 
 
 	retEmotion = "unknown"
 
