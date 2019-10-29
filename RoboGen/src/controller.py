@@ -40,8 +40,8 @@ def analyzeFrameForEmotion():
 
 	emotion = "unknown"
 	readable_json = json.loads(request.json)
-	imageString = readable_json['image']
-	image = json2im(imageString)
+	imageDecoded = readable_json['image']
+	image = json2im(imageDecoded)
 	logger.info('analyzing frame for emotion')
 	
 	# analyze this frame and return the result

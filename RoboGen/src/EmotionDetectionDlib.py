@@ -9,6 +9,7 @@ from scipy.stats import mode
 import base64
 import pickle
 import time
+import json
 
 # -------------------------------------------------------------------------------------------
 # Set up face detection variables
@@ -27,12 +28,11 @@ list_of_current_emotions = []
 # -------------------------------------------------------------------------------------------
 # get image from json string
 # -------------------------------------------------------------------------------------------
-def json2im(jstr):
-    """Convert a JSON string back to a Numpy array"""
-    load = json.loads(jstr)
-    imdata = base64.b64decode(load['image'])
-    im = pickle.loads(imdata)
-    return im
+def json2im(imageDecoded):
+    imdata = base64.b64decode(imageDecoded)
+    jpg_as_np = np.frombuffer(imdata, dtype=np.uint8) 
+    image = cv2.imdecode(jpg_as_np, flags=1)
+    return image
 
 # -------------------------------------------------------------------------------------------
 # function decodeEmotion
@@ -88,12 +88,12 @@ def getLandmarksForClassification(image):
 def analyzeFrameForEmotion(frame): 
 
 	retEmotion = "unknown"
-		
+
 	if frame is None:
 		return retEmotion
-	
+
 	faces = faceCascade.detectMultiScale(frame)
-	
+
 	for (x, y, w, h) in faces:
 		gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # Convert image to grayscale
 		face = gray[y:y + h, x:x + w]  # Cut the frame to size
@@ -102,21 +102,20 @@ def analyzeFrameForEmotion(frame):
 		clahe_image = clahe.apply(face_two)
 		features = np.array(getLandmarksForClassification(clahe_image))
 		features = np.reshape(features, (1, -1))
-		
+
 		if len(features[0]) < 100:
 			continue
-	
+
 		prediction = clf.predict(features)
 		list_of_current_emotions.append(prediction)
-		
+
 		if len(list_of_current_emotions) > 5:
 			list_of_current_emotions.pop(0)
-	
+
 		int_emotion = mode(list_of_current_emotions)[0]
 		emotion = decodeEmotion(int_emotion)
-		
+
 		#test: TODO all detected emotions of all faces should be returned, not just last one
 		retEmotion = emotion
-	
+
 	return retEmotion
-	
