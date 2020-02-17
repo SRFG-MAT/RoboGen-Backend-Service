@@ -62,7 +62,7 @@ RUN pip3 install pipenv && pipenv --python 3.6 install
 RUN pipenv install numpy
 RUN pipenv install opencv-python
 RUN pipenv install dlib
-RUN pipenv install sklearn
+RUN pipenv install sklearn 0.21.3
 
 #--------------------------------------------------------------------
 # call bootstrap.sh
