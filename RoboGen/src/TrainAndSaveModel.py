@@ -5,6 +5,7 @@ import math
 import numpy as np
 import dlib
 import itertools
+import pickle
 from sklearn.svm import SVC
 import sys
 from sklearn.externals import joblib
@@ -80,6 +81,10 @@ print("training SVM linear %s") #train SVM
 clf.fit(npar_train, training_labels)
 
 filename = "EmotionPredictionModel_All.sav"
+filename2 = "EmotionPredictionModel_All.p"
 joblib.dump(clf, filename)
+outfile = open(filename2,'wb')
+pickle.dump(clf, outfile)
+outfile.close()
 
 print("All done!")
