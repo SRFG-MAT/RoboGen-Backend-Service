@@ -10,6 +10,7 @@ import base64
 import pickle
 import time
 import json
+import logging
 
 # -------------------------------------------------------------------------------------------
 # Set up face detection variables
@@ -51,7 +52,7 @@ def decodeEmotion(pred):
     elif pred == 5:
         return "surprise"
     else:
-        return "oh well, something went wrong..."
+        return "ERROR"
 
 # -------------------------------------------------------------------------------------------
 # function getLandmarksForClassification
@@ -119,7 +120,7 @@ def analyzeFrame(frame):
         
         #find face position in image and give client infos to react to it
         x,y,w,h = face
-        Cface = [(w/2+x),(h/2+y)]           # get center from an x,y corner point and a width and height
-        retCamCode = [Cface[0],Cface[1]]    # [x, y]
+        retCamCode = [(w/2+x),(h/2+y)]    # [x, y]
+		logging.warning('Watch out!') 
         
     return [retEmotion, retCamCode] # note: if more than one face in image -> this will use only last face detected..
