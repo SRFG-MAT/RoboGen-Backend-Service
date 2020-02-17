@@ -45,4 +45,5 @@ def analyzeFrameForEmotion():
 	logger.info('analyzing frame for emotion')
 	
 	# analyze this frame and return the result
-	return analyzeFrame(image)
+	retEmotion, retCamCode = analyzeFrame(image)
+	return '{} {}'.format(retEmotion, retCamCode)
