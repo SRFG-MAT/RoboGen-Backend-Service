@@ -87,35 +87,39 @@ def getLandmarksForClassification(image):
 # -------------------------------------------------------------------------------------------
 def analyzeFrame(frame): 
 
-	retEmotion = "unknown"
+    retEmotion = "unknown"
+    retCamCode = [0,0]
 
-	if frame is None:
-		return retEmotion
+    if frame is None:
+        return [retEmotion, retCamCode]
 
-	faces = faceCascade.detectMultiScale(frame)
+    faces = faceCascade.detectMultiScale(frame)
 
-	for (x, y, w, h) in faces:
-		gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # Convert image to grayscale
-		face = gray[y:y + h, x:x + w]  # Cut the frame to size
-		face_two = cv2.resize(face, (350, 350))
-		clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
-		clahe_image = clahe.apply(face_two)
-		features = np.array(getLandmarksForClassification(clahe_image))
-		features = np.reshape(features, (1, -1))
+    for (x, y, w, h) in faces:
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)  # Convert image to grayscale
+        face = gray[y:y + h, x:x + w]  # Cut the frame to size
+        face_two = cv2.resize(face, (350, 350))
+        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+        clahe_image = clahe.apply(face_two)
+        features = np.array(getLandmarksForClassification(clahe_image))
+        features = np.reshape(features, (1, -1))
 
-		if len(features[0]) < 100:
-			continue
+        if len(features[0]) < 100:
+            continue
 
-		prediction = clf.predict(features)
-		list_of_current_emotions.append(prediction)
+        prediction = clf.predict(features)
+        list_of_current_emotions.append(prediction)
 
-		if len(list_of_current_emotions) > 5:
-			list_of_current_emotions.pop(0)
+        if len(list_of_current_emotions) > 5:
+            list_of_current_emotions.pop(0)
 
-		int_emotion = mode(list_of_current_emotions)[0]
-		emotion = decodeEmotion(int_emotion)
-
-		#test: TODO all detected emotions of all faces should be returned, not just last one
-		retEmotion = emotion
-
-	return retEmotion
+        int_emotion = mode(list_of_current_emotions)[0]
+        emotion = decodeEmotion(int_emotion)
+        retEmotion = emotion
+        
+        #find face position in image and give client infos to react to it
+        x,y,w,h = face
+        Cface = [(w/2+x),(h/2+y)]           # get center from an x,y corner point and a width and height
+        retCamCode = [Cface[0],Cface[1]]    # [x, y]
+        
+    return [retEmotion, retCamCode] # note: if more than one face in image -> this will use only last face detected..
