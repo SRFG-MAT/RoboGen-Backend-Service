@@ -46,4 +46,4 @@ def analyzeFrameForEmotion():
 	
 	# analyze this frame and return the result
 	retEmotion, retCamCode = analyzeFrame(image)
-	return '{}{}'.format(retEmotion, retCamCode)
+	return '{}-{}'.format(retEmotion, retCamCode)
