@@ -117,10 +117,6 @@ def analyzeFrame(frame):
         int_emotion = mode(list_of_current_emotions)[0]
         emotion = decodeEmotion(int_emotion)
         retEmotion = emotion
-        
-        #find face position in image and give client infos to react to it
-        x,y,w,h = face
         retCamCode = [(w/2+x),(h/2+y)]    # [x, y]
-        logging.warning('Watch out!') 
         
     return [retEmotion, retCamCode] # note: if more than one face in image -> this will use only last face detected..
