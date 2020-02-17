@@ -30,7 +30,7 @@ def postSomeThing():
     name = content['name']
     logger.info('name: %s',name)
     return "Hello %s" %name
-	
+    
 #----------------------------------------------------
 # API fucntion to post an image of QBO for face detection
 # and receive an interpreted emotion as a string
@@ -38,12 +38,12 @@ def postSomeThing():
 @app.route("/FaceDetection/AnalyzeFrameForEmotion", methods=['POST'])
 def analyzeFrameForEmotion():
 
-	emotion = "unknown"
-	readable_json = json.loads(request.json)
-	imageDecoded = readable_json['image']
-	image = json2im(imageDecoded)
-	logger.info('analyzing frame for emotion')
-	
-	# analyze this frame and return the result
-	retEmotion, retCamCode = analyzeFrame(image)
-	return '{}-{}'.format(retEmotion, retCamCode)
+    emotion = "unknown"
+    readable_json = json.loads(request.json)
+    imageDecoded = readable_json['image']
+    image = json2im(imageDecoded)
+    logger.info('analyzing frame for emotion')
+    
+    # analyze this frame and return the results delimitted by the character "-"
+    retEmotion, retCamCode = analyzeFrame(image)
+    return '{}-{}'.format(retEmotion, retCamCode)
