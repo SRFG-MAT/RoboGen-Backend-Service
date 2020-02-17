@@ -19,7 +19,7 @@ faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_alt.xml')
 clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
 detector = dlib.get_frontal_face_detector()
 predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat") #Or set this to whatever you named the downloaded file
-clf = SVC(kernel='linear', probability=True, break_ties=True, tol=1e-3)#, verbose = True) #Set the classifier as a support vector machines with polynomial kernel
+clf = SVC(kernel='linear', probability=True, tol=1e-3)#, verbose = True) #Set the classifier as a support vector machines with polynomial kernel
 #data = {} #Make dictionary for all values
 #clf = joblib.load("EmotionPredictionModel_All.sav")
 #clf = joblib.load("EDModel.sav")
