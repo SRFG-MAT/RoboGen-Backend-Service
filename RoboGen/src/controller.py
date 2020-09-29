@@ -8,11 +8,11 @@ from flask import Flask,request,jsonify
 import logging
 import json
 from EmotionDetectionDlib import *
+from DataBaseHandler import *
 
 app = Flask(__name__)
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-
 
 #----------------------------------------------------
 # API function to show welcome string
@@ -47,3 +47,37 @@ def analyzeFrameForEmotion():
     # analyze this frame and return the results delimitted by the character "-"
     retEmotion, retCamCode = analyzeFrame(image)
     return '{}-{}'.format(retEmotion, retCamCode)
+
+	
+#----------------------------------------------------
+# API function to send JSON files to database
+#----------------------------------------------------
+@app.route("/DataBase/UploadJSON_MyCalendar", methods=['POST'])
+def uploadJSONMyCalendar():
+
+	readable_json = json.loads(request.json)
+	storeMyCalender(readable_json)
+	
+	return "Server Received and stored: %s" %readable_json
+
+#----------------------------------------------------
+# API function to receive JSON files from database
+#----------------------------------------------------
+@app.route("/DataBase/DownloadJSON_MyCalendar")
+def downloadJSONMyCalendar():
+
+	return loadMyCalender()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
