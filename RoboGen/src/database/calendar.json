@@ -1,6 +1,5 @@
 {
-    "cal": [],
-	"calSettings": [
+	"cal": [
 		{
 			"date": "2020-09-29",
 			"reminder": "10",

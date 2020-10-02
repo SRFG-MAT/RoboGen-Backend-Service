@@ -1,19 +1,42 @@
 import json
 
 # -------------------------------------------------------------------------------------------
-# store json myCalender
+# store json myCalendar
 # -------------------------------------------------------------------------------------------
-def storeMyCalender(json):
-	
-	with open('database/calendar.json', 'w') as outfile:
-		json.dump(data, outfile)
-	
-	# -------------------------------------------------------------------------------------------
-# store json myCalender
+def storeMyCalendar(entry):
+
+    with open('database/calendar.json') as json_file:
+        data = json.load(json_file)
+        temp = data['cal']
+        data.append(entry)
+
+    with open('database/calendar.json','w') as f:
+        json.dump(data, f, indent=4)
+
 # -------------------------------------------------------------------------------------------
-def loadMyCalender():
-    
-	with open('data.txt') as json_file:
-		data = json.load(json_file)
-    
-	return data
+# store json myCalendar
+# -------------------------------------------------------------------------------------------
+def loadMyCalendar():
+
+    with open('database/calendar.json') as json_file:
+        data = json.load(json_file)
+    return data
+
+# -------------------------------------------------------------------------------------------
+# reset json myCalendar
+# -------------------------------------------------------------------------------------------
+def resetMyCalendar():
+
+    base = """{
+    "cal": [{
+                "date": "2020-09-29",
+                "reminder": "10",
+                "repeat": 1,
+                "time": "05:55",
+                "title": "Beispiel"
+		}],
+    "calSettings": []
+    }"""
+
+    with open('database/calendar.json','w') as f:
+        json.dump(base, f, indent=4)

@@ -43,33 +43,36 @@ def analyzeFrameForEmotion():
     imageDecoded = readable_json['image']
     image = json2im(imageDecoded)
     logger.info('analyzing frame for emotion')
-    
+
     # analyze this frame and return the results delimitted by the character "-"
     retEmotion, retCamCode = analyzeFrame(image)
     return '{}-{}'.format(retEmotion, retCamCode)
 
-	
+
 #----------------------------------------------------
 # API function to send JSON files to database
 #----------------------------------------------------
 @app.route("/DataBase/UploadJSON_MyCalendar", methods=['POST'])
 def uploadJSONMyCalendar():
 
-	readable_json = json.loads(request.json)
-	storeMyCalender(readable_json)
-	
-	return "Server Received and stored: %s" %readable_json
+    readable_json = json.loads(request.json)
+    storeMyCalendar(readable_json)
+    return "Server stored entry succesfully"
 
 #----------------------------------------------------
 # API function to receive JSON files from database
 #----------------------------------------------------
-@app.route("/DataBase/DownloadJSON_MyCalendar")
+@app.route("/DataBase/DownloadJSON_MyCalendar", methods=['POST'])
 def downloadJSONMyCalendar():
+    return loadMyCalendar()
 
-	return loadMyCalender()
-
-
-
+#----------------------------------------------------
+# API function to delete/reset JSON files from database
+#----------------------------------------------------
+@app.route("/DataBase/ResetJSON_MyCalendar", methods=['POST'])
+def resetJSONMyCalendar():
+    resetMyCalendar()
+    return "Server reset calendar succesfully"
 
 
 
