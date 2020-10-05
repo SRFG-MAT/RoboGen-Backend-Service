@@ -6,12 +6,13 @@ import json
 def storeMyCalendar(entry):
 
     with open('database/calendar.json') as json_file:
-        data = json.load(json_file)
+        data = json.loads(json.load(json_file))
         temp = data['cal']
-        data.append(entry)
+        temp.append(entry)
+        new = '{"cal": [' + json.dumps(temp) + ']}' 
 
     with open('database/calendar.json','w') as f:
-        json.dump(data, f, indent=4)
+        json.dump(new, f, indent=4)
 
 # -------------------------------------------------------------------------------------------
 # store json myCalendar
@@ -28,14 +29,7 @@ def loadMyCalendar():
 def resetMyCalendar():
 
     base = """{
-    "cal": [{
-                "date": "2020-09-29",
-                "reminder": "10",
-                "repeat": 1,
-                "time": "05:55",
-                "title": "Beispiel"
-		}],
-    "calSettings": []
+    "cal": []
     }"""
 
     with open('database/calendar.json','w') as f:
