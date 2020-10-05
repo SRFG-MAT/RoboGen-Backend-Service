@@ -1,11 +1,3 @@
 {
-	"cal": [
-		{
-			"date": "2020-09-29",
-			"reminder": "10",
-			"repeat": 1,
-			"time": "06:56",
-			"title": "Beispiel"
-		}
-	]
+	"cal": []
 }
