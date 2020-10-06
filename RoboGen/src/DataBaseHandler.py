@@ -15,7 +15,26 @@ def storeMyCalendar(entry):
         json.dump(new, f, indent=4)
 
 # -------------------------------------------------------------------------------------------
-# store json myCalendar
+# edit json myCalendar
+# -------------------------------------------------------------------------------------------
+def editMyCalendar(entry):
+
+    with open('database/calendar.json') as json_file:
+        data = json.loads(json.load(json_file))
+        temp = data['cal']
+
+        for item in temp:
+            if item['title'] == entry['title']:
+                item = entry
+
+        new = '{"cal": ' + json.dumps(temp) + '}' 
+
+    with open('database/calendar.json','w') as f:
+        json.dump(new, f, indent=4)
+
+
+# -------------------------------------------------------------------------------------------
+# load json myCalendar
 # -------------------------------------------------------------------------------------------
 def loadMyCalendar():
 

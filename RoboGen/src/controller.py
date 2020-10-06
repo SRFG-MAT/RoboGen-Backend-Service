@@ -74,7 +74,15 @@ def resetJSONMyCalendar():
     resetMyCalendar()
     return '{"response":"Server reset calendar succesfully"}'
 
+#----------------------------------------------------
+# API function to send JSON files to database
+#----------------------------------------------------
+@app.route("/DataBase/EditJSON_MyCalendar", methods=['POST'])
+def editJSONMyCalendar():
 
+    readable_json = json.loads(json.dumps(request.json))
+    editMyCalendar(readable_json)
+    return '{"response":"Server edited entry succesfully"}'
 
 
 
