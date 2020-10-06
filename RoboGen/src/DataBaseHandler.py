@@ -9,7 +9,7 @@ def storeMyCalendar(entry):
         data = json.loads(json.load(json_file))
         temp = data['cal']
         temp.append(entry)
-        new = '{"cal": [' + json.dumps(temp) + ']}' 
+        new = '{"cal": ' + json.dumps(temp) + '}' 
 
     with open('database/calendar.json','w') as f:
         json.dump(new, f, indent=4)

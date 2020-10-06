@@ -55,9 +55,9 @@ def analyzeFrameForEmotion():
 @app.route("/DataBase/UploadJSON_MyCalendar", methods=['POST'])
 def uploadJSONMyCalendar():
 
-    readable_json = json.loads(request.json)
+    readable_json = json.loads(json.dumps(request.json))
     storeMyCalendar(readable_json)
-    return "Server stored entry succesfully"
+    return '{"response":"Server stored entry succesfully"}'
 
 #----------------------------------------------------
 # API function to receive JSON files from database
@@ -72,7 +72,7 @@ def downloadJSONMyCalendar():
 @app.route("/DataBase/ResetJSON_MyCalendar", methods=['POST'])
 def resetJSONMyCalendar():
     resetMyCalendar()
-    return "Server reset calendar succesfully"
+    return '{"response":"Server reset calendar succesfully"}'
 
 
 
