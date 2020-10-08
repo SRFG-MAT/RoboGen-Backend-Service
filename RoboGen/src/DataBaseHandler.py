@@ -23,9 +23,12 @@ def editMyCalendar(entry):
         data = json.loads(json.load(json_file))
         temp = data['cal']
 
-        for item in temp:
+        for n, item in enumerate(temp):
             if item['title'] == entry['title']:
-                item = entry
+                temp[n]['date'] = entry['date']
+                temp[n]['time'] = entry['time']
+                temp[n]['repeat'] = entry['repeat']
+                temp[n]['reminder'] = entry['reminder']
 
         new = '{"cal": ' + json.dumps(temp) + '}' 
 
