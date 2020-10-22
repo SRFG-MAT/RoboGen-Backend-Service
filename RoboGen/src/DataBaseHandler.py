@@ -61,16 +61,10 @@ def resetMyCalendar():
 #####################################################
 
 # store json mySettings
-def storeMySettings(entry):
-
-    with open('database/settings.json') as json_file:
-        data = json.loads(json.load(json_file))
-        temp = data['cal']
-        temp.append(entry)
-        new = '{"cal": ' + json.dumps(temp) + '}' 
+def storeMySettings(settings):
 
     with open('database/settings.json','w') as f:
-        json.dump(new, f, indent=4)
+        json.dump(settings, f, indent=4)
 
 
 # load json mySettings
