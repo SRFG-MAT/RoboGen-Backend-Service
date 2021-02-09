@@ -3,7 +3,7 @@ import os, json
 from datetime import date
 
 #####################################################
-# Section: MyCalendar	
+# Section: MyCalendar
 #####################################################
 
 # store json myCalendar
@@ -13,12 +13,12 @@ def storeMyCalendar(entry):
         data = json.loads(json.load(json_file))
         temp = data['cal']
         temp.append(entry)
-        new = '{"cal": ' + json.dumps(temp) + '}' 
+        new = '{"cal": ' + json.dumps(temp) + '}'
 
     with open('database/calendar.json','w') as f:
         json.dump(new, f, indent=4)
 
-		
+
 # edit json myCalendar
 def editMyCalendar(entry):
 
@@ -88,14 +88,14 @@ def createCalendarEntry(food, amount):
     str = "[" + today.strftime("%d/%m/%Y") + "]: " + food + "(" + amount + ")" +"\n"
 
     file = open('/database/nutrition.txt', "a") # 'a' -> append for writing if exists
-    file.write(str) 
-    file.close() 
+    file.write(str)
+    file.close()
 
 
 # store json myNutrition
 def storeMyNutrition(food, amount):
 
-	entries = searchFoodArray(food)
+    entries = searchFoodArray(food)
     if not entries:
         return 'error'
     else:
