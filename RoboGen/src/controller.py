@@ -80,6 +80,35 @@ def editJSONMyCalendar():
     editMyCalendar(readable_json)
     return '{"response":"Server edited entry succesfully"}'
 	
+
+#####################################################
+# Route-Section for: Food/Nutrition
+#####################################################
+# API function to send JSON files to database
+@app.route("/DataBase/UploadJSON_MyNutrition", methods=['POST'])
+def uploadJSONMyNutrition():
+    readable_json = json.loads(json.dumps(request.json))
+    storeMyNutrition(readable_json)
+    return '{"response":"Server stored entry succesfully"}'
+
+# API function to receive JSON files from database
+#@app.route("/DataBase/DownloadJSON_MyNutrition", methods=['POST'])
+#def downloadJSONMyNutrition():
+#    return loadMyNutrition()
+
+# API function to delete/reset JSON files from database
+#@app.route("/DataBase/ResetJSON_MyNutrition", methods=['POST'])
+#def resetJSONMyNutrition():
+#    resetMyNutrition()
+#    return '{"response":"Server reset nutritions succesfully"}'
+
+# API function to send JSON files to database
+#@app.route("/DataBase/EditJSON_MyNutrition", methods=['POST'])
+#def editJSONMyNutrition():
+#    readable_json = json.loads(json.dumps(request.json))
+#    editMyNutrition(readable_json)
+#    return '{"response":"Server edited entry succesfully"}'
+	
 	
 #####################################################
 # Route-Section for: Settings

@@ -1,4 +1,6 @@
 import json
+import os, json
+from datetime import date
 
 #####################################################
 # Section: MyCalendar	
@@ -55,9 +57,67 @@ def resetMyCalendar():
     with open('database/calendar.json','w') as f:
         json.dump(base, f, indent=4)
 
-		
+
 #####################################################
-# Section: MySettings	
+# Section: Nutrition
+#####################################################
+
+# search the nutrition table for the food search term
+def searchFoodArray(searchTerm):
+
+    entries = []
+    with open('/database/food.json', 'r') as dt_file:
+        dt_data = json.load(dt_file)
+
+        i = 0
+        for entry in dt_data:
+
+            if entry['Lebensmittel'].lower() == searchTerm:
+                entries.append(entry['Lebensmittel'])
+                print ("Gefunden: " + entry['Lebensmittel'])
+
+            i = i + 1
+
+    return entries
+
+
+# create JSON calendar entry
+def createCalendarEntry(food, amount):
+
+    today = date.today()
+    str = "[" + today.strftime("%d/%m/%Y") + "]: " + food + "(" + amount + ")" +"\n"
+
+    file = open('/database/nutrition.txt', "a") # 'a' -> append for writing if exists
+    file.write(str) 
+    file.close() 
+
+
+# store json myNutrition
+def storeMyNutrition(food, amount):
+
+	entries = searchFoodArray(food)
+    if not entries:
+        return 'error'
+    else:
+        createCalendarEntry(entries[0], amount)
+        return 'OK, ich habe das Nahrungsmittel' + entries[0] + 'deinem Ernaehrungstagebuch mit dem heutigen Datum hinzugefuegt!'
+
+
+# edit json myNutrition
+#def editMyNutrition(entry):
+
+
+# load json myNutrition
+#def loadMyNutrition():
+
+
+# reset json myNutrition
+#def resetMyNutrition():
+
+
+
+#####################################################
+# Section: MySettings
 #####################################################
 
 # store json mySettings
