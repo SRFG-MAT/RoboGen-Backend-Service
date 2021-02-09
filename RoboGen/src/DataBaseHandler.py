@@ -80,27 +80,24 @@ def searchFoodArray(searchTerm):
 
     return entries
 
-
-# create JSON calendar entry
-def createCalendarEntry(food, amount):
-
-    today = date.today()
-    str = "[" + today.strftime("%d/%m/%Y") + "]: " + food + "(" + amount + ")" +"\n"
-
-    file = open('/database/nutrition.txt', "a") # 'a' -> append for writing if exists
-    file.write(str)
-    file.close()
-
-
 # store json myNutrition
-def storeMyNutrition(food, amount):
+def storeMyNutrition(entry):
+
+    food = entry['food']
+    date = entry['date']
+    time = entry['time']
+    amount = entry['amount']
 
     entries = searchFoodArray(food)
     if not entries:
-        return 'error'
+        return 'ERROR'
     else:
-        createCalendarEntry(entries[0], amount)
-        return 'OK, ich habe das Nahrungsmittel' + entries[0] + 'deinem Ernaehrungstagebuch mit dem heutigen Datum hinzugefuegt!'
+		str = "[" + date + "][" + time + "]: " + entries[0] + "(" + amount + ")" +"\n"
+        file = open('/database/nutrition.txt', "a") # 'a' -> append for writing if exists
+        file.write(str)
+        file.close()
+
+        return 'OK'
 
 
 # edit json myNutrition
