@@ -66,7 +66,7 @@ def resetMyCalendar():
 def searchFoodArray(searchTerm):
 
     entries = []
-    with open('/database/food.json', 'r') as dt_file:
+    with open('database/food.json', 'r') as dt_file:
         dt_data = json.load(dt_file)
 
         i = 0
@@ -92,22 +92,22 @@ def storeMyNutrition(entry):
     if not entries:
         return 'ERROR'
     else:
-		str = "[" + date + "][" + time + "]: " + entries[0] + "(" + amount + ")" +"\n"
-        file = open('/database/nutrition.txt', "a") # 'a' -> append for writing if exists
+        str = "[" + date + "][" + time + "]: " + entries[0] + "(" + amount + ")" +"\n"
+        file = open('database/nutrition.txt', "a") # 'a' -> append for writing if exists
         file.write(str)
         file.close()
         return 'OK'
 
 # load json myNutrition
 def loadMyNutrition():
-    file = open('/database/nutrition.txt', "r") # 'r' -> read only
+    file = open('database/nutrition.txt', "r") # 'r' -> read only
     ret = file.read()
     file.close()
     return ret
 
 # reset json myNutrition
 def resetMyNutrition():
-    file = open('/database/nutrition.txt', "w") # 'w' -> write
+    file = open('database/nutrition.txt', "w") # 'w' -> write
     file.write("")
     file.close()
 
