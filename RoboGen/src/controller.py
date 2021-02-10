@@ -92,22 +92,15 @@ def uploadJSONMyNutrition():
     return '{"response":"Server stored entry succesfully"}'
 
 # API function to receive JSON files from database
-#@app.route("/DataBase/DownloadJSON_MyNutrition", methods=['POST'])
-#def downloadJSONMyNutrition():
-#    return loadMyNutrition()
+@app.route("/DataBase/DownloadJSON_MyNutrition", methods=['POST'])
+def downloadJSONMyNutrition():
+    return loadMyNutrition()
 
 # API function to delete/reset JSON files from database
-#@app.route("/DataBase/ResetJSON_MyNutrition", methods=['POST'])
-#def resetJSONMyNutrition():
-#    resetMyNutrition()
-#    return '{"response":"Server reset nutritions succesfully"}'
-
-# API function to send JSON files to database
-#@app.route("/DataBase/EditJSON_MyNutrition", methods=['POST'])
-#def editJSONMyNutrition():
-#    readable_json = json.loads(json.dumps(request.json))
-#    editMyNutrition(readable_json)
-#    return '{"response":"Server edited entry succesfully"}'
+@app.route("/DataBase/ResetJSON_MyNutrition", methods=['POST'])
+def resetJSONMyNutrition():
+    resetMyNutrition()
+    return '{"response":"Server reset nutritions succesfully"}'
 	
 	
 #####################################################

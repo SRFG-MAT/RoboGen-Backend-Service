@@ -96,21 +96,20 @@ def storeMyNutrition(entry):
         file = open('/database/nutrition.txt', "a") # 'a' -> append for writing if exists
         file.write(str)
         file.close()
-
         return 'OK'
 
-
-# edit json myNutrition
-#def editMyNutrition(entry):
-
-
 # load json myNutrition
-#def loadMyNutrition():
-
+def loadMyNutrition():
+    file = open('/database/nutrition.txt', "r") # 'r' -> read only
+    ret = file.read()
+    file.close()
+    return ret
 
 # reset json myNutrition
-#def resetMyNutrition():
-
+def resetMyNutrition():
+    file = open('/database/nutrition.txt', "w") # 'w' -> write
+    file.write("")
+    file.close()
 
 
 #####################################################
