@@ -88,8 +88,7 @@ def editJSONMyCalendar():
 @app.route("/DataBase/UploadJSON_MyNutrition", methods=['POST'])
 def uploadJSONMyNutrition():
     readable_json = json.loads(json.dumps(request.json))
-    storeMyNutrition(readable_json)
-    return '{"response":"Server stored entry succesfully"}'
+    return storeMyNutrition(readable_json)
 
 # API function to receive JSON files from database
 @app.route("/DataBase/DownloadJSON_MyNutrition", methods=['POST'])

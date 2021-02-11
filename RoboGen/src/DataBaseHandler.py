@@ -90,13 +90,13 @@ def storeMyNutrition(entry):
 
     entries = searchFoodArray(food)
     if not entries:
-        return 'ERROR'
+        return '{"response":"Error: Unable to find food title in food list"}'
     else:
         str = "[" + date + "][" + time + "]: " + entries[0] + "(" + amount + ")" +"\n"
         file = open('database/nutrition.txt', "a") # 'a' -> append for writing if exists
         file.write(str)
         file.close()
-        return 'OK'
+        return '{"response":"Server stored entry succesfully"}'
 
 # load json myNutrition
 def loadMyNutrition():
